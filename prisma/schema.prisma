@@ -12,6 +12,11 @@ enum UserRole {
   USER
 }
 
+enum TipoPessoa {
+  FISICA
+  JURIDICA
+}
+
 model User {
   id                    String                 @id @default(cuid())
   name                  String?
@@ -96,4 +101,42 @@ model TwoFactorConfirmation {
   updatedAt DateTime @updatedAt
 
   @@unique([userId])
+}
+
+model Produto {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+  barCode     String
+  costPrice   Float
+  buyPrice    Float
+  sellPrice   Float
+  quantity    Int
+
+  // chaves estrangeiras
+  Fornecedor   Fornecedor? @relation(fields: [fornecedorId], references: [id])
+  fornecedorId Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Fornecedor {
+  id Int @id @default(autoincrement())
+
+  razao_social      String
+  nome_fantasia     String
+  tipo_pessoa       TipoPessoa @default(FISICA)
+  cnpj              String?
+  cpf               String?
+  endereco          String
+  cep               String
+  telefone          String
+  email             String
+  site              String?
+
+  produtos Produto[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

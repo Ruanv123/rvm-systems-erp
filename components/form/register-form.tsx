@@ -1,6 +1,13 @@
 'use client'
+import { userRegister } from '@/actions/register'
+import { RegisterSchema } from '@/schemas'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useTransition } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import * as z from 'zod'
 import { CardWrapper } from '../card-wrapper'
+import { Button } from '../ui/button'
 import {
   Form,
   FormControl,
@@ -9,30 +16,19 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form'
-import { useForm } from 'react-hook-form'
-import { useTransition } from 'react'
-import { RegisterSchema } from '@/schemas'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '../ui/button'
 import { Input } from '../ui/input'
-import { register } from '@/actions/register'
-import { toast } from 'sonner'
+import { PasswordInput } from '@/components/password-input'
 
 export const RegisterForm = () => {
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
-    defaultValues: {
-      email: '',
-      name: '',
-      password: '',
-    },
   })
 
   const handleRegisterForm = (values: z.infer<typeof RegisterSchema>) => {
     startTransition(() => {
-      register(values).then((data) => {
+      userRegister(values).then((data) => {
         if (data?.success) {
           form.reset()
           toast.success(data?.success)
@@ -101,11 +97,10 @@ export const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
+                    <PasswordInput
                       {...field}
                       disabled={isPending}
-                      type='password'
-                      placeholder='Password'
+                      placeholder='******'
                     />
                   </FormControl>
                   <FormMessage />

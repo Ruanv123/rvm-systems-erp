@@ -20,6 +20,7 @@ import { login } from '@/actions/login'
 import { useSearchParams } from 'next/navigation'
 import { error } from 'console'
 import { toast } from 'sonner'
+import { PasswordInput } from '@/components/password-input'
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition()
@@ -28,10 +29,6 @@ export const LoginForm = () => {
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
   })
 
   const handleSubmitLogin = (values: z.infer<typeof LoginSchema>) => {
@@ -51,7 +48,7 @@ export const LoginForm = () => {
 
   return (
     <CardWrapper
-      headerTitle='🔐 Login'
+      headerTitle='Login'
       headerLabel='Bem vindo de volta'
       backButtonlabel='Não possui uma conta?'
       backButtonHref='/auth/register'
@@ -87,11 +84,10 @@ export const LoginForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
+                    <PasswordInput
                       {...field}
                       disabled={isPending}
                       placeholder='******'
-                      type='password'
                     />
                   </FormControl>
                   <Button
@@ -100,7 +96,7 @@ export const LoginForm = () => {
                     asChild
                     className='px-0 font-normal'
                   >
-                    <Link href='/reset'>Forgot Password</Link>
+                    <Link href='/auth/reset'>Forgot Password</Link>
                   </Button>
                   <FormMessage />
                 </FormItem>
