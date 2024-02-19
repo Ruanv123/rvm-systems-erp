@@ -2,7 +2,7 @@ import db from '@/lib/db'
 
 export const getAllProducts = async () => {
   try {
-    const products = db.produto.findMany({
+    const products = await db.produto.findMany({
       orderBy: [
         {
           id: 'asc',

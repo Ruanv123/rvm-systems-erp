@@ -1,7 +1,5 @@
 import { ProductModal } from '@/components/modals/product-modal'
 import { PageTitle } from '@/components/page-title'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import {
   Pagination,
   PaginationContent,
@@ -20,8 +18,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { getAllProducts } from '@/data/produtos'
-import { Download, Filter } from 'lucide-react'
-import Link from 'next/link'
 import { DeleteProductTrash } from '../../../components/delete-product'
 
 const ProdutosPage = async () => {
