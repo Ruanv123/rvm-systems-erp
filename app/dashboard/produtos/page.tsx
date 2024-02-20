@@ -111,7 +111,7 @@ const ProdutosPage = async () => {
           </Table>
         </div>
 
-        <Pagination>
+        {/* <Pagination>
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious href='#' />
@@ -126,7 +126,7 @@ const ProdutosPage = async () => {
               <PaginationNext href='#' />
             </PaginationItem>
           </PaginationContent>
-        </Pagination>
+        </Pagination> */}
       </div>
     </div>
   )

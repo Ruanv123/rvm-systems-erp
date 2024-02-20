@@ -16,3 +16,13 @@ export async function getModulesByUser() {
 
   return modules
 }
+
+export async function getAllModules() {
+  try {
+    const modules = await db.modules.findMany({})
+
+    return modules
+  } catch (error) {
+    console.log(error)
+  }
+}

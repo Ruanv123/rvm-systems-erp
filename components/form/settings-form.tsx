@@ -1,35 +1,19 @@
 'use client'
 
+import { settings } from '@/actions/settings'
 import { useCurrentUser } from '@/lib/auth'
 import { SettingsSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { Button } from '../ui/button'
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../ui/form'
-import { Separator } from '../ui/separator'
 import { useTransition } from 'react'
-import { Input } from '../ui/input'
-import { PasswordInput } from '../password-input'
-import { Switch } from '../ui/switch'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select'
-import { UserRole } from '@prisma/client'
-import { settings } from '@/actions/settings'
+import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { z } from 'zod'
+import { PasswordInput } from '../password-input'
+import { Button } from '../ui/button'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
+import { Input } from '../ui/input'
+import { Separator } from '../ui/separator'
+import { Switch } from '../ui/switch'
 
 export const SettingsForm = () => {
   const user = useCurrentUser()

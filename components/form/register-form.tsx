@@ -1,5 +1,5 @@
 'use client'
-import { userRegister } from '@/actions/register'
+import { userRegister } from '@/actions/user'
 import { RegisterSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTransition } from 'react'

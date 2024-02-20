@@ -1,16 +1,26 @@
-import db from "@/lib/db";
+import db from '@/lib/db'
+
+export async function getAllUsers() {
+  try {
+    const users = await db.user.findMany({})
+
+    return users
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const getUserByEmail = async (email: string) => {
   try {
     const user = db.user.findUnique({
       where: { email },
-    });
+    })
 
-    return user;
+    return user
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 export const getUserById = async (id: string) => {
   try {
@@ -18,10 +28,10 @@ export const getUserById = async (id: string) => {
       where: {
         id,
       },
-    });
+    })
 
-    return user;
+    return user
   } catch (error) {
-    return null;
+    return null
   }
-};
+}

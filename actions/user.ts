@@ -3,7 +3,7 @@
 import { RegisterSchema } from '@/schemas'
 import { z } from 'zod'
 import bcrypt from 'bcryptjs'
-import { getUserByEmail } from '@/data/user'
+import { getUserByEmail, getUserById } from '@/data/user'
 import db from '@/lib/db'
 
 export const userRegister = async (values: z.infer<typeof RegisterSchema>) => {
@@ -32,4 +32,20 @@ export const userRegister = async (values: z.infer<typeof RegisterSchema>) => {
   })
 
   return { success: 'Usuario criado com sucesso!' }
+}
+
+export async function deleteUser(id: string) {
+  const existingUser = await getUserById(id)
+
+  if (!existingUser) {
+    return { error: 'User not exist!' }
+  }
+
+  await db.user.delete({
+    where: {
+      id,
+    },
+  })
+
+  return { success: 'User deleted with success!' }
 }
