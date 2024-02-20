@@ -29,8 +29,36 @@ model User {
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
 
+  //chaves estrangeiras
+  Permissions   Permissions? @relation(fields: [permissionsId], references: [id])
+  permissionsId Int?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Modules {
+  id Int @id @default(autoincrement())
+
+  name        String
+  description String
+  route       String
+
+  //chave estrangeira 
+  Permissions   Permissions? @relation(fields: [permissionsId], references: [id])
+  permissionsId Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Permissions {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  users   User[]
+  modules Modules[]
 }
 
 model Account {
@@ -124,16 +152,16 @@ model Produto {
 model Fornecedor {
   id Int @id @default(autoincrement())
 
-  razao_social      String
-  nome_fantasia     String
-  tipo_pessoa       TipoPessoa @default(FISICA)
-  cnpj              String?
-  cpf               String?
-  endereco          String
-  cep               String
-  telefone          String
-  email             String
-  site              String?
+  razao_social  String
+  nome_fantasia String
+  tipo_pessoa   TipoPessoa @default(FISICA)
+  cnpj          String?
+  cpf           String?
+  endereco      String
+  cep           String
+  telefone      String
+  email         String
+  site          String?
 
   produtos Produto[]
 

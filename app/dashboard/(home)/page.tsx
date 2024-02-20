@@ -9,12 +9,31 @@ import {
 } from '@/components/ui/card'
 import { Overview } from './_components/overview'
 import { RecentSales } from './_components/recent-sales'
+import { getModulesByUser } from '@/data/modules'
+import Link from 'next/link'
 
-const DashboardPage = () => {
+async function DashboardPage() {
+  const modules = await getModulesByUser()
   return (
     <>
       <div className='flex flex-col gap-4'>
         <PageTitle title='Dashboard' />
+
+        <p>Modulos:</p>
+        <div className='flex items-center gap-2'>
+          {modules.map((module) => {
+            return (
+              <div
+                className='flex items-center justify-center p-5 border rounded-md w-52'
+                key={module.id}
+              >
+                <Link href={`/dashboard/${module.route}`}>
+                  <h1>{module.name}</h1>
+                </Link>
+              </div>
+            )
+          })}
+        </div>
 
         <div className='flex flex-col md:grid md:grid-cols-4 gap-4'>
           <TotalOrdersCard />

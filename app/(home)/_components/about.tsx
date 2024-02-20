@@ -24,11 +24,11 @@ export const About = () => {
                 Company
               </h2>
               <p className='text-xl text-muted-foreground mt-4'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit
-                amet, consectetur adipiscing elit.
+                O RVM Systems é um ERP completo projetado para simplificar e
+                automatizar operações empresariais. Com recursos avançados de
+                gestão, oferecemos uma solução abrangente para impulsionar a
+                eficiência e maximizar o desempenho em todos os aspectos do seu
+                negócio.
               </p>
             </div>
 
