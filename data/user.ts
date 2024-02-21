@@ -12,7 +12,7 @@ export async function getAllUsers() {
 
 export const getUserByEmail = async (email: string) => {
   try {
-    const user = db.user.findUnique({
+    const user = db.user.findFirst({
       where: { email },
     })
 
