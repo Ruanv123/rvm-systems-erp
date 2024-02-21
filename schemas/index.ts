@@ -72,5 +72,18 @@ export const FornecedorSchema = z.object({
   cep: z.string(),
   telefone: z.string(),
   email: z.string().email(),
-  site: z.optional(z.string()),
+  site: z.optional(z.string().url()),
+})
+
+export const ClientSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+})
+
+const EnderecoSchema = z.object({
+  rua: z.string(),
+  cidade: z.string(),
+  estado: z.string(),
+  codigoPostal: z.string(),
+  pais: z.string(),
 })

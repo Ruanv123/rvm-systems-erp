@@ -1,5 +1,15 @@
 'use client'
-import { Box, Boxes, Home, LogOut, LucideIcon, Menu, Truck } from 'lucide-react'
+import {
+  Box,
+  Boxes,
+  Contact,
+  Home,
+  LogOut,
+  LucideIcon,
+  Menu,
+  Truck,
+  User,
+} from 'lucide-react'
 import { Separator } from './ui/separator'
 import Link from 'next/link'
 import { ModeToggle } from './theme-toggle'
@@ -25,11 +35,11 @@ interface IHeaderLinks {
 }
 
 const HeaderLinks: IHeaderLinks[] = [
-  {
-    href: '/dashboard',
-    label: 'Início',
-    icon: Home,
-  },
+  // {
+  //   href: '/dashboard',
+  //   label: 'Início',
+  //   icon: Home,
+  // },
   {
     href: '/dashboard/produtos',
     label: 'Produtos',
@@ -39,6 +49,16 @@ const HeaderLinks: IHeaderLinks[] = [
     href: '/dashboard/fornecedor',
     label: 'Fornecedores',
     icon: Truck,
+  },
+  {
+    href: '/dashboard/users',
+    label: 'Users',
+    icon: User,
+  },
+  {
+    href: '/dashboard/clients',
+    label: 'Clients',
+    icon: Contact,
   },
 ]
 
@@ -50,16 +70,16 @@ export const Header = () => {
   }
 
   return (
-    <header className='border-b sticky'>
-      <div className='flex h-16 items-center justify-between sm:justify-normal gap-6 px-6'>
-        {/* <Link href='/dashboard'> */}
-        <div className='flex items-center gap-2 select-none'>
-          <Boxes className='h-6 w-6' />
-          <h3>Rvm Systems</h3>
-        </div>
-        {/* </Link> */}
-        <Separator orientation='vertical' className='h-6 sm:visible hidden' />
-        <nav className='sm:flex items-center space-x-4 lg:space-x-6 hidden'>
+    <header className='sticky border-b'>
+      <div className='flex h-16 items-center justify-between gap-6 px-6 sm:justify-normal'>
+        <Link href='/dashboard'>
+          <div className='flex select-none items-center gap-2'>
+            <Boxes className='h-6 w-6' />
+            <h3>Rvm Systems</h3>
+          </div>
+        </Link>
+        <Separator orientation='vertical' className='hidden h-6 sm:visible' />
+        <nav className='hidden items-center space-x-4 sm:flex lg:space-x-6'>
           {HeaderLinks.map((link) => (
             <Link
               key={link.label}
@@ -76,7 +96,7 @@ export const Header = () => {
         </nav>
 
         {/* conta e mudança de tema */}
-        <div className='ml-auto  items-center space-x-2 sm:flex hidden'>
+        <div className='ml-auto  hidden items-center space-x-2 sm:flex'>
           <Separator orientation='vertical' className='h-6' />
           <ModeToggle />
           <AccountMenu />
@@ -93,7 +113,7 @@ export const Header = () => {
                 <SheetTitle>Menu</SheetTitle>
               </SheetHeader>
               <Separator className='my-5' />
-              <nav className='flex flex-col items-start mt-5 gap-3'>
+              <nav className='mt-5 flex flex-col items-start gap-3'>
                 {HeaderLinks.map((link) => (
                   <Link
                     key={link.label}
@@ -110,11 +130,11 @@ export const Header = () => {
               <SheetFooter className='mt-auto'>
                 <Button
                   variant='outline'
-                  className='text-rose-500 justify-start dark:text-rose-400 gap-2'
+                  className='justify-start gap-2 text-rose-500 dark:text-rose-400'
                   onClick={handleLogout}
                 >
                   <LogOut />
-                  <span className='font-semibold text-base'>Logout</span>
+                  <span className='text-base font-semibold'>Logout</span>
                 </Button>
               </SheetFooter>
             </SheetContent>

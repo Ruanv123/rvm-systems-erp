@@ -17,6 +17,13 @@ enum TipoPessoa {
   JURIDICA
 }
 
+enum StatusPedido {
+  PENDENTE
+  PROCESSANDO
+  COMPLETO
+  CANCELADO
+}
+
 model User {
   id                    String                 @id @default(cuid())
   name                  String?
@@ -35,30 +42,6 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model Modules {
-  id Int @id @default(autoincrement())
-
-  name        String
-  description String
-  route       String
-
-  //chave estrangeira 
-  Permissions   Permissions? @relation(fields: [permissionsId], references: [id])
-  permissionsId Int?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Permissions {
-  id Int @id @default(autoincrement())
-
-  name String
-
-  users   User[]
-  modules Modules[]
 }
 
 model Account {
@@ -131,22 +114,28 @@ model TwoFactorConfirmation {
   @@unique([userId])
 }
 
-model Produto {
-  id          Int    @id @default(autoincrement())
+model Modules {
+  id Int @id @default(autoincrement())
+
   name        String
   description String
-  barCode     String
-  costPrice   Float
-  buyPrice    Float
-  sellPrice   Float
-  quantity    Int
+  route       String
 
-  // chaves estrangeiras
-  Fornecedor   Fornecedor? @relation(fields: [fornecedorId], references: [id])
-  fornecedorId Int?
+  //chave estrangeira 
+  Permissions   Permissions? @relation(fields: [permissionsId], references: [id])
+  permissionsId Int?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Permissions {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  users   User[]
+  modules Modules[]
 }
 
 model Fornecedor {
@@ -160,11 +149,82 @@ model Fornecedor {
   endereco      String
   cep           String
   telefone      String
-  email         String
+  email         String     @unique
   site          String?
 
   produtos Produto[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Cliente {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  telefone String
+
+  // chaves estrangeiras
+  endereco   Endereco? @relation(fields: [enderecoId], references: [id])
+  enderecoId Int?
+  orders     Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Endereco {
+  id           Int       @id @default(autoincrement())
+  rua          String
+  cidade       String
+  estado       String
+  codigoPostal String
+  pais         String
+  criadoEm     DateTime  @default(now())
+  atualizadoEm DateTime  @updatedAt
+  Cliente      Cliente[]
+}
+
+model Produto {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+  barCode     String
+  costPrice   Float
+  buyPrice    Float
+  sellPrice   Float
+  quantity    Int
+
+  // chaves estrangeiras
+  Fornecedor   Fornecedor? @relation(fields: [fornecedorId], references: [id])
+  fornecedorId Int?
+  Order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+}
+
+model Order {
+  id        Int       @id @default(autoincrement())
+  
+  total Float
+  status StatusPedido
+
+  //chaves estrangeiras
+  Cliente   Cliente?  @relation(fields: [clienteId], references: [id])
+  clienteId Int?
+  produtos  Produto[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FormaDePagamento {
+  id          Int       @id @default(autoincrement())
+  nome        String    @unique
+  descricao   String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }

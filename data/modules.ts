@@ -3,7 +3,8 @@ import db from '@/lib/db'
 
 export async function getModulesByUser() {
   const atualUser = await currentUser()
-  const user = await db.user.findUnique({
+
+  const user = await db.user.findFirst({
     where: { id: atualUser?.id },
     include: { Permissions: { include: { modules: true } } },
   })

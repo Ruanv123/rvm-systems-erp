@@ -1,12 +1,11 @@
 'use client'
-import { useForm } from 'react-hook-form'
-import { Form, FormField } from '../ui/form'
-import { Button } from '../ui/button'
 import { useTransition } from 'react'
+import { useForm } from 'react-hook-form'
+import { Button } from '../ui/button'
+import { Form } from '../ui/form'
 import { Separator } from '../ui/separator'
-import { getAllModules } from '@/data/modules'
 
-export function ModulesForm() {
+export function PermissionsForm() {
   const [isPending, startTransition] = useTransition()
 
   const form = useForm({})
@@ -16,7 +15,7 @@ export function ModulesForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className='mt-6'>
         <div className='flex justify-between'>
-          <h1 className='font-semibold text-lg'>Modules</h1>
+          <h1 className='text-lg font-semibold'>Permissions</h1>
           <div className='flex gap-2'>
             <Button variant='secondary' type='button'>
               Cancel

@@ -2,6 +2,7 @@
 import { productRegister } from '@/actions/product'
 import { ProductSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -18,6 +19,7 @@ import {
 import { Input } from '../ui/input'
 
 export const ProductForm = () => {
+  const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof ProductSchema>>({
@@ -28,8 +30,9 @@ export const ProductForm = () => {
     startTransition(() => {
       productRegister(values).then((data) => {
         if (data?.success) {
-          form.reset()
           toast.success(data?.success)
+          form.reset()
+          router.refresh()
         }
 
         if (data?.error) {

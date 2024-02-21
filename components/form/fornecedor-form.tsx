@@ -1,18 +1,21 @@
 'use client'
-import { useForm } from 'react-hook-form'
-import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form'
-import { z } from 'zod'
+import { fornecedorRegister } from '@/actions/fornecedor'
 import { FornecedorSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Input } from '../ui/input'
-import { useTransition } from 'react'
-import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 import { TipoPessoa } from '@prisma/client'
-import { Button } from '../ui/button'
-import { fornecedorRegister } from '@/actions/fornecedor'
+import { useTransition } from 'react'
+import { useForm } from 'react-hook-form'
+import { PatternFormat } from 'react-number-format'
 import { toast } from 'sonner'
+import { z } from 'zod'
+import { Button } from '../ui/button'
+import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form'
+import { Input } from '../ui/input'
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
+import { useRouter } from 'next/navigation'
 
 export const FornecedorForm = () => {
+  const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof FornecedorSchema>>({
@@ -27,8 +30,9 @@ export const FornecedorForm = () => {
       fornecedorRegister(values).then((data) => {
         console.log(values)
         if (data?.success) {
-          form.reset()
           toast.success(data?.success)
+          form.reset()
+          router.refresh()
         }
 
         if (data?.error) {
@@ -54,7 +58,7 @@ export const FornecedorForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  Razao Social <RedText text='*' />
+                  Razão Social <RedText text='*' />
                 </FormLabel>
                 <FormControl>
                   <Input {...field} disabled={isPending} />
@@ -88,7 +92,7 @@ export const FornecedorForm = () => {
                   <RadioGroup
                     onValueChange={field.onChange}
                     defaultValue={field.value}
-                    className='flex items-center space-y-1'
+                    className='flex items-center'
                   >
                     <FormItem className='flex items-center space-x-3 space-y-0'>
                       <FormControl>
@@ -109,7 +113,7 @@ export const FornecedorForm = () => {
                         />
                       </FormControl>
                       <FormLabel className='font-normal'>
-                        Pessoa juridica
+                        Pessoa Jurídica
                       </FormLabel>
                     </FormItem>
                   </RadioGroup>
@@ -118,7 +122,7 @@ export const FornecedorForm = () => {
             )}
           />
 
-          <div className='flex gap-2 items-center'>
+          <div className='flex items-center gap-2'>
             {tipo_pessoa_watch === 'FISICA' ? (
               <FormField
                 control={form.control}
@@ -129,7 +133,15 @@ export const FornecedorForm = () => {
                       Cpf <RedText text='*' />
                     </FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={isPending} maxLength={11} />
+                      <PatternFormat
+                        format='###.###.###-##'
+                        mask='_'
+                        allowEmptyFormatting
+                        customInput={Input}
+                        {...field}
+                        disabled={isPending}
+                      />
+                      {/* <Input {...field} disabled={isPending} maxLength={11} /> */}
                     </FormControl>
                   </FormItem>
                 )}
@@ -144,7 +156,15 @@ export const FornecedorForm = () => {
                       Cnpj <RedText text='*' />
                     </FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={isPending} maxLength={14} />
+                      <PatternFormat
+                        format='##.###.###/####-##'
+                        mask='_'
+                        allowEmptyFormatting
+                        {...field}
+                        disabled={isPending}
+                        customInput={Input}
+                      />
+                      {/* <Input {...field} disabled={isPending} maxLength={14} /> */}
                     </FormControl>
                   </FormItem>
                 )}
@@ -160,7 +180,15 @@ export const FornecedorForm = () => {
                     Cep <RedText text='*' />
                   </FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={isPending} maxLength={8} />
+                    <PatternFormat
+                      format='#####-###'
+                      customInput={Input}
+                      allowEmptyFormatting
+                      mask='_'
+                      {...field}
+                      disabled={isPending}
+                    />
+                    {/* <Input {...field} disabled={isPending} maxLength={8} /> */}
                   </FormControl>
                 </FormItem>
               )}
@@ -190,7 +218,15 @@ export const FornecedorForm = () => {
                   Telefone <RedText text='*' />
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} disabled={isPending} />
+                  <PatternFormat
+                    format='(##) #####-####'
+                    mask='_'
+                    allowEmptyFormatting
+                    {...field}
+                    disabled={isPending}
+                    customInput={Input}
+                  />
+                  {/* <Input {...field} disabled={isPending} /> */}
                 </FormControl>
               </FormItem>
             )}

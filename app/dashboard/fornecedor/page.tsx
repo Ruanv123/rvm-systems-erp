@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/table'
 import { getAllFornecedores } from '@/data/fornecedor'
 import { Pencil } from 'lucide-react'
+import Link from 'next/link'
 
 const FornecedorPage = async () => {
   const fornecedorData = await getAllFornecedores()
@@ -49,7 +50,7 @@ const FornecedorPage = async () => {
         <FornecedorModal />
       </div>
       <div className='space-y-2.5'>
-        <div className='space-y-2.5 mt-10 border rounded-md overflow-hidden'>
+        <div className='mt-10 space-y-2.5 overflow-hidden rounded-md border'>
           <Table>
             <TableHeader>
               <TableRow>
@@ -80,8 +81,8 @@ const FornecedorPage = async () => {
                       {fornecedor.cpf?.length
                         ? formataCPf(fornecedor.cpf)
                         : fornecedor.cnpj
-                        ? formataCPf(fornecedor.cnpj)
-                        : '-'}
+                          ? formataCPf(fornecedor.cnpj)
+                          : '-'}
                     </TableCell>
                     <TableCell>{formatCEP(fornecedor.cep)}</TableCell>
                     <TableCell>{fornecedor.endereco}</TableCell>
@@ -90,7 +91,17 @@ const FornecedorPage = async () => {
                     </TableCell>
                     <TableCell>{fornecedor.email}</TableCell>
                     <TableCell>
-                      {fornecedor.site?.length ? fornecedor.site : '-'}
+                      {fornecedor.site && fornecedor.site?.length ? (
+                        <Link
+                          href={fornecedor.site}
+                          target='_blank'
+                          className='underline'
+                        >
+                          {fornecedor.site}
+                        </Link>
+                      ) : (
+                        '-'
+                      )}
                     </TableCell>
                     <TableCell className='flex gap-1'>
                       <DeleteFornecedorTrash id={fornecedor.id} />

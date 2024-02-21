@@ -18,13 +18,13 @@ import { Switch } from '../ui/switch'
 export const SettingsForm = () => {
   const user = useCurrentUser()
   const [isPending, startTransition] = useTransition()
-
+  
   const form = useForm<z.infer<typeof SettingsSchema>>({
     resolver: zodResolver(SettingsSchema),
     defaultValues: {
       name: user?.name || '',
       email: user?.email || '',
-      isTwoFactorEnabled: user?.isTwoFactorEnabled,
+      isTwoFactorEnabled: user?.isTwoFactorEnabled || false,
       role: user?.role,
     },
   })
@@ -52,7 +52,7 @@ export const SettingsForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <div className='flex justify-between'>
-          <h1 className='font-semibold text-lg'>General</h1>
+          <h1 className='text-lg font-semibold'>General</h1>
           <div className='flex gap-2'>
             <Button variant='secondary' type='button' onClick={handleCancel}>
               Cancel

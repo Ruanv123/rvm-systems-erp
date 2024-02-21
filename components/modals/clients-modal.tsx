@@ -1,4 +1,4 @@
-import { FornecedorForm } from '../form/fornecedor-form'
+import { ClientsForm } from '../form/clients-form'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -9,21 +9,19 @@ import {
   DialogTrigger,
 } from '../ui/dialog'
 
-export const FornecedorModal = () => {
+export const ClientsModal = () => {
   return (
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button>+ Add Fornecedor</Button>
+          <Button>+ Add Client</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Cadastrar Fornecedor</DialogTitle>
-            <DialogDescription>
-              Cadastre o fornecedor escolhido
-            </DialogDescription>
+            <DialogTitle>Cadastrar Cliente</DialogTitle>
+            <DialogDescription>Cadastre o cliente desejado</DialogDescription>
           </DialogHeader>
-          <FornecedorForm />
+          <ClientsForm />
         </DialogContent>
       </Dialog>
     </>
