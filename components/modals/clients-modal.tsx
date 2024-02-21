@@ -1,4 +1,3 @@
-import { ClientsForm } from '../form/clients-form'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -21,7 +20,7 @@ export const ClientsModal = () => {
             <DialogTitle>Cadastrar Cliente</DialogTitle>
             <DialogDescription>Cadastre o cliente desejado</DialogDescription>
           </DialogHeader>
-          <ClientsForm />
+          {/* <ClientsForm /> */}
         </DialogContent>
       </Dialog>
     </>
