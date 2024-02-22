@@ -72,7 +72,7 @@ export const FornecedorSchema = z.object({
   cep: z.string(),
   telefone: z.string(),
   email: z.string().email(),
-  site: z.optional(z.string().url()),
+  site: z.optional(z.string().url().optional()),
 })
 
 export const ClientSchema = z.object({

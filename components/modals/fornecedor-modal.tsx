@@ -1,3 +1,5 @@
+'use client'
+import { useState } from 'react'
 import { FornecedorForm } from '../form/fornecedor-form'
 import { Button } from '../ui/button'
 import {
@@ -10,9 +12,11 @@ import {
 } from '../ui/dialog'
 
 export const FornecedorModal = () => {
+  const [open, setOpen] = useState(false)
+  console.log(open)
   return (
     <>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button>+ Add Fornecedor</Button>
         </DialogTrigger>
@@ -23,7 +27,7 @@ export const FornecedorModal = () => {
               Cadastre o fornecedor escolhido
             </DialogDescription>
           </DialogHeader>
-          <FornecedorForm />
+          <FornecedorForm setOpen={setOpen} />
         </DialogContent>
       </Dialog>
     </>

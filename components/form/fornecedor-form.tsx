@@ -3,18 +3,29 @@ import { fornecedorRegister } from '@/actions/fornecedor'
 import { FornecedorSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TipoPessoa } from '@prisma/client'
-import { useTransition } from 'react'
+import { Dispatch, SetStateAction, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { PatternFormat } from 'react-number-format'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { Button } from '../ui/button'
-import { Form, FormControl, FormField, FormItem, FormLabel } from '../ui/form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../ui/form'
 import { Input } from '../ui/input'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 import { useRouter } from 'next/navigation'
 
-export const FornecedorForm = () => {
+interface IFornecedorForm {
+  setOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export const FornecedorForm = ({ setOpen }: IFornecedorForm) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
@@ -31,6 +42,7 @@ export const FornecedorForm = () => {
         console.log(values)
         if (data?.success) {
           toast.success(data?.success)
+          setOpen(false)
           form.reset()
           router.refresh()
         }
@@ -63,6 +75,7 @@ export const FornecedorForm = () => {
                 <FormControl>
                   <Input {...field} disabled={isPending} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -118,6 +131,7 @@ export const FornecedorForm = () => {
                     </FormItem>
                   </RadioGroup>
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -141,8 +155,8 @@ export const FornecedorForm = () => {
                         {...field}
                         disabled={isPending}
                       />
-                      {/* <Input {...field} disabled={isPending} maxLength={11} /> */}
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -164,8 +178,8 @@ export const FornecedorForm = () => {
                         disabled={isPending}
                         customInput={Input}
                       />
-                      {/* <Input {...field} disabled={isPending} maxLength={14} /> */}
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -188,8 +202,8 @@ export const FornecedorForm = () => {
                       {...field}
                       disabled={isPending}
                     />
-                    {/* <Input {...field} disabled={isPending} maxLength={8} /> */}
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -206,6 +220,7 @@ export const FornecedorForm = () => {
                 <FormControl>
                   <Input {...field} disabled={isPending} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -226,8 +241,8 @@ export const FornecedorForm = () => {
                     disabled={isPending}
                     customInput={Input}
                   />
-                  {/* <Input {...field} disabled={isPending} /> */}
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -243,6 +258,7 @@ export const FornecedorForm = () => {
                 <FormControl>
                   <Input {...field} disabled={isPending} type='email' />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -251,14 +267,16 @@ export const FornecedorForm = () => {
             name='site'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Site {/* <RedText text='*' /> */}</FormLabel>
+                <FormLabel>Site</FormLabel>
                 <FormControl>
                   <Input {...field} disabled={isPending} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
         </div>
+
         <Button type='submit' className='w-full' disabled={isPending}>
           Cadastrar
         </Button>

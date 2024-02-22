@@ -1,3 +1,5 @@
+'use server'
+
 import { DeleteUser } from '@/components/delete-user'
 import { PageTitle } from '@/components/page-title'
 import { Badge } from '@/components/ui/badge'
@@ -13,6 +15,7 @@ import { getAllUsers } from '@/data/user'
 
 async function PageUsers() {
   const usersData = await getAllUsers()
+
   return (
     <div className='flex flex-col gap-5'>
       <div className='flex items-center justify-between'>
