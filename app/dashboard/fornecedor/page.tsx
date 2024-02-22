@@ -15,7 +15,12 @@ import { Pencil } from 'lucide-react'
 import Link from 'next/link'
 
 const FornecedorPage = async () => {
-  const fornecedorData = await getAllFornecedores();
+  let fornecedorData
+  try {
+    fornecedorData = await getAllFornecedores()
+  } catch (error) {
+    alert(`'erro: ' ${error}`)
+  }
 
   return (
     <div className='flex flex-col gap-5'>
