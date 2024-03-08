@@ -6,7 +6,7 @@ import { ProductSchema } from '@/schemas'
 import { z } from 'zod'
 
 export const productRegister = async (
-  values: z.infer<typeof ProductSchema>
+  values: z.infer<typeof ProductSchema>,
 ) => {
   const validatedFields = ProductSchema.safeParse(values)
 

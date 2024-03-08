@@ -9,7 +9,7 @@ import { FornecedorSchema } from '@/schemas'
 import { z } from 'zod'
 
 export const fornecedorRegister = async (
-  values: z.infer<typeof FornecedorSchema>
+  values: z.infer<typeof FornecedorSchema>,
 ) => {
   try {
     const vailidatedFields = FornecedorSchema.safeParse(values)

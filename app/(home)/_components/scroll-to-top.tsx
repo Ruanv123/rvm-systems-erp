@@ -1,40 +1,40 @@
-"use client"
+'use client'
 
-import { useState, useEffect } from "react";
-import { ArrowUpToLine } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from 'react'
+import { ArrowUpToLine } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 export const ScrollToTop = () => {
-  const [showTopBtn, setShowTopBtn] = useState(false);
+  const [showTopBtn, setShowTopBtn] = useState(false)
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
+    window.addEventListener('scroll', () => {
       if (window.scrollY > 1) {
-        setShowTopBtn(true);
+        setShowTopBtn(true)
       } else {
-        setShowTopBtn(false);
+        setShowTopBtn(false)
       }
-    });
-  }, []);
+    })
+  }, [])
 
   const goToTop = () => {
     window.scroll({
       top: 0,
       left: 0,
-    });
-  };
+    })
+  }
 
   return (
     <>
       {showTopBtn && (
         <Button
           onClick={goToTop}
-          className="fixed bottom-4 right-4 opacity-90 shadow-md"
-          size="icon"
+          className='fixed bottom-4 right-4 opacity-90 shadow-md'
+          size='icon'
         >
-          <ArrowUpToLine className="h-4 w-4" />
+          <ArrowUpToLine className='h-4 w-4' />
         </Button>
       )}
     </>
-  );
-};
+  )
+}

@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import { ProductForm } from '../form/product.form'
 import { Button } from '../ui/button'
 import {
@@ -10,9 +13,11 @@ import {
 } from '../ui/dialog'
 
 export const ProductModal = () => {
+  const [open, setOpen] = useState(false)
+
   return (
     <>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button>+ Add Produto</Button>
         </DialogTrigger>

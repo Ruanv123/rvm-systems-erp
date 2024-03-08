@@ -43,7 +43,7 @@ const ProdutosPage = async () => {
           </Button>
         </div> */}
 
-        <div className='space-y-2.5 mt-10 border rounded-md overflow-hidden'>
+        <div className='mt-10 space-y-2.5 overflow-hidden rounded-md border'>
           <Table>
             <TableHeader>
               <TableRow>

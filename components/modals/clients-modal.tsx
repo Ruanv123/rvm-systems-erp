@@ -1,3 +1,5 @@
+'use client'
+import { useState } from 'react'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -9,9 +11,11 @@ import {
 } from '../ui/dialog'
 
 export const ClientsModal = () => {
+  const [open, setOpen] = useState(false)
+
   return (
     <>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button>+ Add Client</Button>
         </DialogTrigger>

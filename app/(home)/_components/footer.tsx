@@ -3,18 +3,18 @@ import Link from 'next/link'
 export const Footer = () => {
   return (
     <footer id='footer'>
-      <hr className='w-11/12 mx-auto' />
+      <hr className='mx-auto w-11/12' />
 
-      <section className='container py-20 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8'>
+      <section className='container grid grid-cols-2 gap-x-12 gap-y-8 py-20 md:grid-cols-4 xl:grid-cols-6'>
         <div className='col-span-full xl:col-span-2'>
-          <Link href='/' className='font-bold text-xl flex'>
+          <Link href='/' className='flex text-xl font-bold'>
             {/* Logo */}
             Rvm Systems
           </Link>
         </div>
 
         <div className='flex flex-col gap-2'>
-          <h3 className='font-bold text-lg'>Follow US</h3>
+          <h3 className='text-lg font-bold'>Follow US</h3>
           <div>
             <Link href='#' className='opacity-60 hover:opacity-100'>
               Github
@@ -35,7 +35,7 @@ export const Footer = () => {
         </div>
 
         <div className='flex flex-col gap-2'>
-          <h3 className='font-bold text-lg'>Platforms</h3>
+          <h3 className='text-lg font-bold'>Platforms</h3>
           <div>
             <Link href='#' className='opacity-60 hover:opacity-100'>
               Web
@@ -56,7 +56,7 @@ export const Footer = () => {
         </div>
 
         <div className='flex flex-col gap-2'>
-          <h3 className='font-bold text-lg'>About</h3>
+          <h3 className='text-lg font-bold'>About</h3>
           <div>
             <Link href='#' className='opacity-60 hover:opacity-100'>
               Features
@@ -77,7 +77,7 @@ export const Footer = () => {
         </div>
 
         <div className='flex flex-col gap-2'>
-          <h3 className='font-bold text-lg'>Community</h3>
+          <h3 className='text-lg font-bold'>Community</h3>
           <div>
             <Link href='#' className='opacity-60 hover:opacity-100'>
               Youtube
@@ -104,7 +104,7 @@ export const Footer = () => {
           <Link
             target='_blank'
             href='https://github.com/Ruanv123'
-            className='text-primary transition-all border-primary hover:border-b-2'
+            className='border-primary text-primary transition-all hover:border-b-2'
           >
             Ruan Victor
           </Link>

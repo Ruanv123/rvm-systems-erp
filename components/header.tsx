@@ -1,5 +1,6 @@
 'use client'
 import {
+  Bell,
   Box,
   Boxes,
   Contact,
@@ -27,6 +28,7 @@ import { Button } from './ui/button'
 import { logout } from '@/actions/logout'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { Input } from './ui/input'
 
 interface IHeaderLinks {
   href: string
@@ -55,11 +57,11 @@ const HeaderLinks: IHeaderLinks[] = [
     label: 'Users',
     icon: User,
   },
-  {
-    href: '/dashboard/clients',
-    label: 'Clients',
-    icon: Contact,
-  },
+  // {
+  //   href: '/dashboard/clients',
+  //   label: 'Clients',
+  //   icon: Contact,
+  // },
 ]
 
 export const Header = () => {
@@ -86,7 +88,7 @@ export const Header = () => {
               href={link.href}
               className={cn(
                 'flex items-center gap-1.5 text-sm font-medium text-muted-foreground',
-                pathname === link.href ? 'text-sky-500' : null
+                pathname === link.href ? 'text-sky-500' : null,
               )}
             >
               <link.icon className='h-4 w-4' />
@@ -96,9 +98,12 @@ export const Header = () => {
         </nav>
 
         {/* conta e mudança de tema */}
+
         <div className='ml-auto  hidden items-center space-x-2 sm:flex'>
+          <Input />
           <Separator orientation='vertical' className='h-6' />
           <ModeToggle />
+          <Bell size={40} />
           <AccountMenu />
         </div>
 

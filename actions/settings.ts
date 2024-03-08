@@ -32,7 +32,7 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
   if (values.password && values.newPassword && dbUser.password) {
     const passwordsMatch = await bcrypt.compare(
       values.password,
-      dbUser.password
+      dbUser.password,
     )
 
     if (!passwordsMatch) {

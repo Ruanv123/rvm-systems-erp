@@ -14,7 +14,7 @@ export const getAllFornecedores = async () => {
   } catch (error) {
     console.error('Erro ao buscar fornecedores:', error)
     throw new Error(
-      'Erro ao buscar fornecedores. Por favor, tente novamente mais tarde.'
+      'Erro ao buscar fornecedores. Por favor, tente novamente mais tarde.',
     )
   }
 }

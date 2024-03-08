@@ -47,7 +47,7 @@ export const SettingsSchema = z
     {
       message: 'New password is required!',
       path: ['newPassword'],
-    }
+    },
   )
   .refine(
     (data) => {
@@ -59,7 +59,7 @@ export const SettingsSchema = z
     {
       message: 'Password is required!',
       path: ['password'],
-    }
+    },
   )
 
 export const FornecedorSchema = z.object({
@@ -86,4 +86,10 @@ const EnderecoSchema = z.object({
   estado: z.string(),
   codigoPostal: z.string(),
   pais: z.string(),
+})
+
+export const PermissionsSchema = z.object({
+  name: z.string(),
+  userId: z.string(),
+  moduleId: z.number(),
 })

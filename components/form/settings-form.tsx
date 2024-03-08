@@ -18,7 +18,7 @@ import { Switch } from '../ui/switch'
 export const SettingsForm = () => {
   const user = useCurrentUser()
   const [isPending, startTransition] = useTransition()
-  
+
   const form = useForm<z.infer<typeof SettingsSchema>>({
     resolver: zodResolver(SettingsSchema),
     defaultValues: {

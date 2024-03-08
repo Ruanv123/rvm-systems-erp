@@ -2,9 +2,9 @@ import { Header } from '@/components/header'
 
 const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className='flex flex-col w-full'>
+    <div className='flex w-full flex-col'>
       <Header />
-      <main className='flex-1 p-10 w-full'>{children}</main>
+      <main className='w-full flex-1 p-10'>{children}</main>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { productRegister } from '@/actions/product'
 import { ProductSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
+import { Dispatch, SetStateAction, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -17,6 +17,10 @@ import {
   FormMessage,
 } from '../ui/form'
 import { Input } from '../ui/input'
+
+interface IProductForm {
+  setOpen: Dispatch<SetStateAction<boolean>>
+}
 
 export const ProductForm = () => {
   const router = useRouter()
@@ -117,7 +121,7 @@ export const ProductForm = () => {
                       type='number'
                       onChange={(e) => {
                         const newValue = parseFloat(
-                          e.target.value.replace(/[^\d.-]/g, '')
+                          e.target.value.replace(/[^\d.-]/g, ''),
                         )
                         field.onChange(newValue)
                       }}
@@ -143,7 +147,7 @@ export const ProductForm = () => {
                       type='number'
                       onChange={(e) => {
                         const newValue = parseFloat(
-                          e.target.value.replace(/[^\d.-]/g, '')
+                          e.target.value.replace(/[^\d.-]/g, ''),
                         )
                         field.onChange(newValue)
                       }}
@@ -167,7 +171,7 @@ export const ProductForm = () => {
                       type='number'
                       onChange={(e) => {
                         const newValue = parseFloat(
-                          e.target.value.replace(/[^\d.-]/g, '')
+                          e.target.value.replace(/[^\d.-]/g, ''),
                         )
                         field.onChange(newValue)
                       }}
@@ -191,7 +195,7 @@ export const ProductForm = () => {
                       type='text'
                       onChange={(e) => {
                         const newValue = parseFloat(
-                          e.target.value.replace(/[^\d.-]/g, '')
+                          e.target.value.replace(/[^\d.-]/g, ''),
                         )
                         field.onChange(newValue)
                       }}
