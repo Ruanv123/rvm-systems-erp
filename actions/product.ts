@@ -60,3 +60,29 @@ export const deleteProduct = async (id: number) => {
 
   return { success: 'Product deleted with success!' }
 }
+
+interface IGetProducts {
+  search?: string | undefined
+  offset?: number
+  limit?: number
+}
+
+export async function getProducts({
+  search,
+  offset = 0,
+  limit = 10,
+}: IGetProducts) {
+  const data = await db.produto.findMany({
+    skip: offset,
+    take: limit,
+    orderBy: {
+      id: 'asc',
+    },
+  })
+
+  const totalCount = await db.produto.count()
+
+  const totalPages = Math.ceil(totalCount / limit)
+
+  return { data, totalCount, totalPages }
+}

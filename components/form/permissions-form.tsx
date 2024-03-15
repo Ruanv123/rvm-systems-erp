@@ -15,13 +15,43 @@ import {
   SelectValue,
 } from '../ui/select'
 import { Separator } from '../ui/separator'
+import { Modules, User } from '@prisma/client'
 
 export function PermissionsForm() {
   const [isPending, startTransition] = useTransition()
+  const [users, setUsers] = useState<User[]>()
+  const [modules, setModules] = useState<Modules[]>()
 
-  const form = useForm<z.infer<typeof PermissionsSchema>>({})
+  const form = useForm<z.infer<typeof PermissionsSchema>>({
+    defaultValues: {
+      name: '',
+    },
+  })
 
-  function handleSubmit() {}
+  function handleSubmit(values: z.infer<typeof PermissionsSchema>) {
+    console.log(values)
+  }
+
+  async function getUsers() {
+    const date = await fetch('http://localhost:3000/api/users')
+
+    const retorno = await date.json()
+
+    setUsers(retorno.data)
+  }
+
+  async function getModules() {
+    const date = await fetch('http://localhost:3000/api/modules')
+
+    const retorno = await date.json()
+
+    setModules(retorno.data)
+  }
+
+  useEffect(() => {
+    getUsers()
+    getModules()
+  }, [])
 
   return (
     <Form {...form}>
@@ -77,7 +107,7 @@ export function PermissionsForm() {
               name='userId'
               render={({ field }) => (
                 <FormItem>
-                  <Select>
+                  <Select onValueChange={field.onChange}>
                     <FormControl className='w-[500px]'>
                       <SelectTrigger>
                         <SelectValue placeholder='select user' />
@@ -87,7 +117,47 @@ export function PermissionsForm() {
                       <SelectItem value={'a'} disabled>
                         select user
                       </SelectItem>
-                      <SelectItem value='b'>b</SelectItem>
+                      {users?.map((d, idx) => (
+                        <SelectItem key={idx} value={d.id}>
+                          {d.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <Separator className='my-3' />
+          <div className='flex w-full justify-between'>
+            <div>
+              <h3 className='text-md font-semibold'>
+                Module <span className='text-red-500'>*</span>
+              </h3>
+              <p className='text-xs'>Enter module to get permission.</p>
+            </div>
+            <FormField
+              control={form.control}
+              name='moduleId'
+              render={({ field }) => (
+                <FormItem>
+                  <Select onValueChange={field.onChange}>
+                    <FormControl className='w-[500px]'>
+                      <SelectTrigger>
+                        <SelectValue placeholder='select module' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value={'a'} disabled>
+                        select user
+                      </SelectItem>
+                      {modules?.map((d, idx) => (
+                        <SelectItem key={idx} value={String(d.id)}>
+                          {d.name}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage />

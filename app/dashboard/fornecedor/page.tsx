@@ -1,3 +1,4 @@
+import { getFornecedores } from '@/actions/fornecedor'
 import { DeleteFornecedorTrash } from '@/components/delete-fornecedor'
 import { FornecedorModal } from '@/components/modals/fornecedor-modal'
 import { PageTitle } from '@/components/page-title'
@@ -10,17 +11,25 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { getAllFornecedores } from '@/data/fornecedor'
 import { Pencil } from 'lucide-react'
 import Link from 'next/link'
+import PaginationC from '../_components/pagination'
 
-const FornecedorPage = async () => {
-  let fornecedorData
-  try {
-    fornecedorData = await getAllFornecedores()
-  } catch (error) {
-    alert(`'erro: ' ${error}`)
+async function FornecedorPage({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string
+    page?: string
+    limit?: string
   }
+}) {
+  const search = searchParams?.query || ''
+  const currentPage = Number(searchParams?.page) || 1
+  const limit = Number(searchParams?.limit) || 10
+  const offset = (currentPage - 1) * limit
+
+  const { data, totalPages } = await getFornecedores({ search, offset, limit })
 
   return (
     <div className='flex flex-col gap-5'>
@@ -28,6 +37,7 @@ const FornecedorPage = async () => {
         <PageTitle title='Fornecedores' />
         <FornecedorModal />
       </div>
+
       <div className='space-y-2.5'>
         <div className='mt-10 space-y-2.5 overflow-hidden rounded-md border'>
           <Table>
@@ -47,8 +57,8 @@ const FornecedorPage = async () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {fornecedorData && fornecedorData.length ? (
-                fornecedorData?.map((fornecedor) => (
+              {data && data.length ? (
+                data.map((fornecedor) => (
                   <TableRow key={fornecedor.id}>
                     <TableCell>{fornecedor.id}</TableCell>
                     <TableCell>{fornecedor.razao_social}</TableCell>
@@ -95,6 +105,7 @@ const FornecedorPage = async () => {
             </TableBody>
           </Table>
         </div>
+        <PaginationC totalPages={totalPages} />
       </div>
     </div>
   )

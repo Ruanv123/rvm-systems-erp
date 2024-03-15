@@ -9,9 +9,11 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { getAllClients } from '@/data/clients'
+import { Edit } from 'lucide-react'
 
 async function ClientsPage() {
   const clientsData = await getAllClients()
+
   return (
     <div className='flex flex-col gap-5'>
       <div className='flex items-center justify-between'>
@@ -27,13 +29,7 @@ async function ClientsPage() {
                 <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Telefone</TableHead>
-                <TableHead>Rua</TableHead>
-                <TableHead>Cidade</TableHead>
-                <TableHead>Endereço</TableHead>
-                <TableHead>Telefone</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Site</TableHead>
-                <TableHead>Ações</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -44,13 +40,9 @@ async function ClientsPage() {
                     <TableCell>{client.name}</TableCell>
                     <TableCell>{client.email}</TableCell>
                     <TableCell>{client.telefone}</TableCell>
-                    <TableCell>{client}</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                    <TableCell className='flex gap-1'></TableCell>
+                    <TableCell className='flex gap-1'>
+                      <Edit />
+                    </TableCell>
                   </TableRow>
                 ))
               ) : (

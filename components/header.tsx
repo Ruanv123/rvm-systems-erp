@@ -1,34 +1,32 @@
 'use client'
+import { logout } from '@/actions/logout'
+import { cn } from '@/lib/utils'
 import {
-  Bell,
+  Archive,
   Box,
   Boxes,
+  ClipboardPen,
   Contact,
-  Home,
   LogOut,
   LucideIcon,
   Menu,
   Truck,
   User,
 } from 'lucide-react'
-import { Separator } from './ui/separator'
 import Link from 'next/link'
-import { ModeToggle } from './theme-toggle'
+import { usePathname } from 'next/navigation'
 import { AccountMenu } from './account-menu'
+import { ModeToggle } from './theme-toggle'
+import { Button } from './ui/button'
+import { Separator } from './ui/separator'
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet'
-import { Button } from './ui/button'
-import { logout } from '@/actions/logout'
-import { usePathname } from 'next/navigation'
-import { cn } from '@/lib/utils'
-import { Input } from './ui/input'
 
 interface IHeaderLinks {
   href: string
@@ -43,13 +41,13 @@ const HeaderLinks: IHeaderLinks[] = [
   //   icon: Home,
   // },
   {
-    href: '/dashboard/produtos',
-    label: 'Produtos',
+    href: '/dashboard/product',
+    label: 'Products',
     icon: Box,
   },
   {
     href: '/dashboard/fornecedor',
-    label: 'Fornecedores',
+    label: 'Supplier',
     icon: Truck,
   },
   {
@@ -57,11 +55,21 @@ const HeaderLinks: IHeaderLinks[] = [
     label: 'Users',
     icon: User,
   },
-  // {
-  //   href: '/dashboard/clients',
-  //   label: 'Clients',
-  //   icon: Contact,
-  // },
+  {
+    href: '/dashboard/clients',
+    label: 'Clients',
+    icon: Contact,
+  },
+  {
+    href: '/dashboard/order',
+    label: 'Orders',
+    icon: Archive,
+  },
+  {
+    href: '/dashboard/tasks',
+    label: 'Tasks',
+    icon: ClipboardPen,
+  },
 ]
 
 export const Header = () => {
@@ -100,10 +108,21 @@ export const Header = () => {
         {/* conta e mudança de tema */}
 
         <div className='ml-auto  hidden items-center space-x-2 sm:flex'>
-          <Input />
+          {/* <Input /> */}
           <Separator orientation='vertical' className='h-6' />
           <ModeToggle />
-          <Bell size={40} />
+          {/* menu de notificaçõs */}
+          {/* <Popover>
+            <PopoverTrigger>
+              <Bell className='h-[20px] w-[20px]' />
+            </PopoverTrigger>
+            <PopoverContent align='center'>
+              <div className='flex items-center justify-between text-xs'>
+                <p>Notifications</p>
+                <p className='underline'>Mark all as read</p>
+              </div>
+            </PopoverContent>
+          </Popover> */}
           <AccountMenu />
         </div>
 

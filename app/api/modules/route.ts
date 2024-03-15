@@ -2,7 +2,7 @@ import db from '@/lib/db'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const users = await db.user.findMany({
+  const modules = await db.modules.findMany({
     orderBy: {
       name: 'asc',
     },
@@ -10,6 +10,6 @@ export async function GET() {
 
   return NextResponse.json({
     code: 200,
-    data: users,
+    data: modules,
   })
 }

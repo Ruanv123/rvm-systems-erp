@@ -8,23 +8,6 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-enum UserRole {
-  ADMIN
-  USER
-}
-
-enum TipoPessoa {
-  FISICA
-  JURIDICA
-}
-
-enum StatusPedido {
-  PENDENTE
-  PROCESSANDO
-  COMPLETO
-  CANCELADO
-}
-
 model User {
   id                    String                 @id @default(cuid())
   name                  String?
@@ -33,44 +16,40 @@ model User {
   image                 String?
   password              String?
   role                  UserRole               @default(USER)
-  accounts              Account[]
   isTwoFactorEnabled    Boolean                @default(false)
+  permissionsId         Int?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  accounts              Account[]
   twoFactorConfirmation TwoFactorConfirmation?
-
-  //chaves estrangeiras
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Permissions Permissions[]
+  Permissions           Permissions?           @relation(fields: [permissionsId], references: [id])
 }
 
 model Account {
-  id                String  @id @default(cuid())
+  id                String   @id @default(cuid())
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
 model VerificationToken {
-  id      String   @id @default(cuid())
-  email   String
-  token   String   @unique
-  expires DateTime
-
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expires   DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -78,11 +57,10 @@ model VerificationToken {
 }
 
 model PasswordResetToken {
-  id      String   @id @default(cuid())
-  email   String
-  token   String   @unique
-  expires DateTime
-
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expires   DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -90,11 +68,10 @@ model PasswordResetToken {
 }
 
 model TwoFactorToken {
-  id      String   @id @default(cuid())
-  email   String
-  token   String   @unique
-  expires DateTime
-
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expires   DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -102,45 +79,33 @@ model TwoFactorToken {
 }
 
 model TwoFactorConfirmation {
-  id String @id @default(cuid())
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  id        String   @id @default(cuid())
+  userId    String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@unique([userId])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Modules {
-  id Int @id @default(autoincrement())
-
-  name        String
-  description String
-  route       String
-
-  //chave estrangeira 
-
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Permissions Permissions[]
+  id            Int          @id @default(autoincrement())
+  name          String
+  description   String
+  route         String
+  permissionsId Int?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  Permissions   Permissions? @relation(fields: [permissionsId], references: [id])
 }
 
 model Permissions {
-  id Int @id @default(autoincrement())
-
-  name String
-
-  users     User?    @relation(fields: [userId], references: [id])
-  modules   Modules? @relation(fields: [modulesId], references: [id])
-  userId    String?
-  modulesId Int?
+  id      Int       @id @default(autoincrement())
+  name    String
+  Modules Modules[]
+  User    User[]
 }
 
 model Fornecedor {
-  id Int @id @default(autoincrement())
-
+  id            Int        @id @default(autoincrement())
   razao_social  String
   nome_fantasia String
   tipo_pessoa   TipoPessoa @default(FISICA)
@@ -151,26 +116,21 @@ model Fornecedor {
   telefone      String
   email         String     @unique
   site          String?
-
-  produtos Produto[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  produtos      Produto[]
 }
 
 model Cliente {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  telefone String
-
-  // chaves estrangeiras
-  endereco   Endereco? @relation(fields: [enderecoId], references: [id])
+  id         Int       @id @default(autoincrement())
+  name       String
+  email      String    @unique
+  telefone   String
   enderecoId Int?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  endereco   Endereco? @relation(fields: [enderecoId], references: [id])
   orders     Order[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Endereco {
@@ -186,38 +146,32 @@ model Endereco {
 }
 
 model Produto {
-  id          Int    @id @default(autoincrement())
-  name        String
-  description String
-  barCode     String
-  costPrice   Float
-  buyPrice    Float
-  sellPrice   Float
-  quantity    Int
-
-  // chaves estrangeiras
-  Fornecedor   Fornecedor? @relation(fields: [fornecedorId], references: [id])
+  id           Int      @id @default(autoincrement())
+  name         String
+  description  String
+  barCode      String
+  costPrice    Float
+  buyPrice     Float
+  sellPrice    Float
+  quantity     Int
   fornecedorId Int?
-  Order        Order?      @relation(fields: [orderId], references: [id])
   orderId      Int?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  Fornecedor Fornecedor? @relation(fields: [fornecedorId], references: [id])
+  Order      Order?      @relation(fields: [orderId], references: [id])
 }
 
 model Order {
-  id Int @id @default(autoincrement())
-
-  total  Float
-  status StatusPedido
-
-  //chaves estrangeiras
-  Cliente   Cliente?  @relation(fields: [clienteId], references: [id])
+  id        Int          @id @default(autoincrement())
+  total     Float
+  status    StatusPedido
   clienteId Int?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  Cliente   Cliente?     @relation(fields: [clienteId], references: [id])
   produtos  Produto[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model FormaDePagamento {
@@ -226,4 +180,21 @@ model FormaDePagamento {
   descricao String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum TipoPessoa {
+  FISICA
+  JURIDICA
+}
+
+enum StatusPedido {
+  PENDENTE
+  PROCESSANDO
+  COMPLETO
+  CANCELADO
 }

@@ -72,3 +72,29 @@ export const deleteFornecedor = async (id: number) => {
 
   return { success: 'Fornecedor deleted with success!' }
 }
+
+interface IGetFornecedor {
+  search?: string | undefined
+  offset?: number
+  limit?: number
+}
+
+export async function getFornecedores({
+  search,
+  offset = 0,
+  limit = 10,
+}: IGetFornecedor) {
+  const data = await db.fornecedor.findMany({
+    skip: offset,
+    take: limit,
+    orderBy: {
+      id: 'asc',
+    },
+  })
+
+  const totalCount = await db.fornecedor.count()
+
+  const totalPages = Math.ceil(totalCount / limit)
+
+  return { data, totalCount, totalPages }
+}

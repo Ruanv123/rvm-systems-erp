@@ -1,4 +1,4 @@
-import { TipoPessoa, UserRole } from '@prisma/client'
+import { StatusPedido, TipoPessoa, UserRole } from '@prisma/client'
 import { z } from 'zod'
 
 export const LoginSchema = z.object({
@@ -78,6 +78,7 @@ export const FornecedorSchema = z.object({
 export const ClientSchema = z.object({
   name: z.string(),
   email: z.string().email(),
+  telefone: z.string(),
 })
 
 const EnderecoSchema = z.object({
@@ -92,4 +93,16 @@ export const PermissionsSchema = z.object({
   name: z.string(),
   userId: z.string(),
   moduleId: z.number(),
+})
+
+export const OrderSchema = z.object({
+  total: z.number(),
+  stauts: z.enum([
+    StatusPedido.CANCELADO,
+    StatusPedido.COMPLETO,
+    StatusPedido.PENDENTE,
+    StatusPedido.PROCESSANDO,
+  ]),
+  clienteId: z.number(),
+  produtos: z.array(z.number()),
 })
