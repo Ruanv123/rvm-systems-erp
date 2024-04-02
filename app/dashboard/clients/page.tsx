@@ -9,7 +9,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { getAllClients } from '@/data/clients'
-import { Edit } from 'lucide-react'
+import { Edit, Pencil, Trash } from 'lucide-react'
 
 async function ClientsPage() {
   const clientsData = await getAllClients()
@@ -41,7 +41,8 @@ async function ClientsPage() {
                     <TableCell>{client.email}</TableCell>
                     <TableCell>{client.telefone}</TableCell>
                     <TableCell className='flex gap-1'>
-                      <Edit />
+                      <Pencil size={18} />
+                      <Trash size={18}/>
                     </TableCell>
                   </TableRow>
                 ))

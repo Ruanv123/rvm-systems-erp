@@ -10,7 +10,7 @@ import {
   Table,
 } from '@/components/ui/table'
 import { getOrders } from '@/data/orders'
-import { Edit } from 'lucide-react'
+import { Edit, Pencil, Trash } from 'lucide-react'
 
 export default async function Page() {
   const orders = await getOrders()
@@ -52,7 +52,8 @@ export default async function Page() {
                       {order.produtos?.map((a) => a.name + ', ')}
                     </TableCell>
                     <TableCell className='flex gap-1'>
-                      <Edit />
+                      <Pencil size={18} />
+                      <Trash size={18} />
                     </TableCell>
                   </TableRow>
                 ))
