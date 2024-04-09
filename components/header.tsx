@@ -107,10 +107,12 @@ export const Header = () => {
 
         {/* conta e mudança de tema */}
 
-        <div className='ml-auto  hidden items-center space-x-2 sm:flex'>
+        <div className='ml-auto flex items-center space-x-2'>
           {/* <Input /> */}
           <Separator orientation='vertical' className='h-6' />
-          <ModeToggle />
+          <div className='hidden sm:visible'>
+            <ModeToggle />
+          </div>
           {/* menu de notificaçõs */}
           {/* <Popover>
             <PopoverTrigger>
