@@ -23,17 +23,17 @@ export default function PaginationC({ totalPages }: { totalPages: number }) {
 
   return (
     <>
-      <Pagination className='mx-0 w-fit'>
+      <Pagination className='mx-0 ml-auto w-fit'>
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious href={createPageURL(currentPage - 1)} />
           </PaginationItem>
-
+          {/* <PaginationEllipsis /> */}
           <PaginationItem>
             <PaginationNext href={createPageURL(currentPage + 1)} />
           </PaginationItem>
         </PaginationContent>
-        <p>{totalPages}</p>
+        {/* <p>{totalPages}</p> */}
       </Pagination>
     </>
   )
